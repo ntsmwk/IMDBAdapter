@@ -6,14 +6,14 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class Search extends BaseModel {
+public class SearchCollection extends BaseModel {
     private int totalResults;
     private List<Movie> movies;
 
-    public Search(){
+    public SearchCollection(){
     }
     
-    public Search(int totalResults, List<Movie> movies) {
+    public SearchCollection(int totalResults, List<Movie> movies) {
         setResponse(true);
         this.movies = movies;
         this.totalResults = totalResults;

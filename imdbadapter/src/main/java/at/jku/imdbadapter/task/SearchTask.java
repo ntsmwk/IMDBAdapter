@@ -10,9 +10,9 @@ import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 
 import at.jku.imdbadapter.model.Movie;
-import at.jku.imdbadapter.model.Search;
+import at.jku.imdbadapter.model.SearchCollection;
 
-public class SearchTask extends RecursiveTask<Search> {
+public class SearchTask extends RecursiveTask<SearchCollection> {
     private String url;
     private boolean searchAll;
 
@@ -26,26 +26,26 @@ public class SearchTask extends RecursiveTask<Search> {
     }
 
     @Override
-    protected Search compute() {
-        Search search = callSearch(url, Search.class);
-        if (!searchAll || determineTotalPages(search) == 1) {
-            return search;
+    protected SearchCollection compute() {
+        SearchCollection searchCollection = callSearch(url, SearchCollection.class);
+        if (!searchAll || determineTotalPages(searchCollection) == 1) {
+            return searchCollection;
         }
 
-        return computeAll(search);
+        return computeAll(searchCollection);
     }
 
-    private Search computeAll(Search search) {
-        ConcurrentSkipListSet<Movie> movies = new ConcurrentSkipListSet<>(search.getMovies());
-        for (ForkJoinTask<Search> task : invokeAll(generateSearchTasks(search))) {
+    private SearchCollection computeAll(SearchCollection searchCollection) {
+        ConcurrentSkipListSet<Movie> movies = new ConcurrentSkipListSet<>(searchCollection.getMovies());
+        for (ForkJoinTask<SearchCollection> task : invokeAll(generateSearchTasks(searchCollection))) {
             movies.addAll(task.join().getMovies());
         }
-        return new Search(search.getTotalResults(), new ArrayList<>(movies));
+        return new SearchCollection(searchCollection.getTotalResults(), new ArrayList<>(movies));
     }
 
-    private List<SearchTask> generateSearchTasks(Search search) {
+    private List<SearchTask> generateSearchTasks(SearchCollection searchCollection) {
         List<SearchTask> searchTasks = new ArrayList<>();
-        for (int i = 2; i <= determineTotalPages(search); i++) {
+        for (int i = 2; i <= determineTotalPages(searchCollection); i++) {
             searchTasks.add(new SearchTask(buildSearchUrl(i)));
         }
         return searchTasks;
@@ -57,8 +57,8 @@ public class SearchTask extends RecursiveTask<Search> {
         return builder.toString();
     }
 
-    private int determineTotalPages(Search search) {
-        return (search.getTotalResults() / 10) + 1;
+    private int determineTotalPages(SearchCollection searchCollection) {
+        return (searchCollection.getTotalResults() / 10) + 1;
     }
 
     private <T> T callSearch(String url, Class<T> responseClass) {

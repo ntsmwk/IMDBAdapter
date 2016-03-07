@@ -25,6 +25,7 @@ public class Movie extends BaseModel implements Comparable<Movie> {
     private String imdbID;
     private String type;
 
+
     @XmlElement(name = "Title")
     public String getTitle() {
         return title;
@@ -216,5 +217,4 @@ public class Movie extends BaseModel implements Comparable<Movie> {
     public String toString() {
         return String.format("Movie [title=%s]", title);
     }
-
 }
