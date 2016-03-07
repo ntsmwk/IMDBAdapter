@@ -4,10 +4,10 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.List;
 
 import at.jku.imdbadapter.builder.ImDBURLBuilder;
 import at.jku.imdbadapter.model.Movie;
+import at.jku.imdbadapter.model.SearchCollection;
 import at.jku.imdbadapter.model.ResponseType;
 import at.jku.imdbadapter.transformer.JSONObject2MovieTransformer;
 
@@ -27,11 +27,11 @@ public class ImDBRESTServiceClient {
 		return new JSONObject2MovieTransformer().transformToMovie(response);
 	}
 
-	public List<Movie> getMoviesBySearch(String search) {
+	public SearchCollection getMoviesBySearch(String search) {
 		String searchURL = new ImDBURLBuilder(URL).setResponseType(ResponseType.JSON).setSearchTitle(search).build();
 		String response = callImDBRestService(searchURL);
 		return new JSONObject2MovieTransformer().transformToMovieList(response);
-		
+
 	}
 
 	private String callImDBRestService(String URLString) {

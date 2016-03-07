@@ -1,12 +1,9 @@
 package at.jku.imdbadapter.transformer;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import at.jku.imdbadapter.model.Movie;
+import at.jku.imdbadapter.model.SearchCollection;
 
 public class JSONObject2MovieTransformer {
 
@@ -16,10 +13,9 @@ public class JSONObject2MovieTransformer {
 		return movie;
 	}
 
-	public List<Movie> transformToMovieList(String jsonString) {
+	public SearchCollection transformToMovieList(String jsonString) {
 		Gson gson = new Gson();
-		ArrayList<Movie> movieList = new ArrayList<Movie>();
-		movieList = gson.fromJson(jsonString, new TypeToken<ArrayList<Movie>>() {}.getType());
+		SearchCollection movieList = gson.fromJson(jsonString, SearchCollection.class);
 		return movieList;
 	}
 }
