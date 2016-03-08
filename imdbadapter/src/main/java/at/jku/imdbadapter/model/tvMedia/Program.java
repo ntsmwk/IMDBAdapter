@@ -4,10 +4,11 @@ import javax.xml.bind.annotation.XmlElement;
 
 import at.jku.imdbadapter.model.Model;
 
-public class Programm implements Model{
+public class Program implements Model {
     private String id;
     private String title;
     private String subtitle;
+    private String sender;
     private String date;
     private String categorie;
     private String time;
@@ -36,6 +37,14 @@ public class Programm implements Model{
     @XmlElement(name = "subtitel")
     public void setSubtitle(String subtitle) {
         this.subtitle = subtitle;
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public void setSender(String sender) {
+        this.sender = sender;
     }
 
     @XmlElement(name = "datum")
@@ -67,6 +76,6 @@ public class Programm implements Model{
 
     @Override
     public String toString() {
-        return String.format("Programm [title=%s, time=%s]", title, time);
+        return String.format("Programm [title=%s, time=%s, sender=%s]", title, time, sender);
     }
-}    
+}

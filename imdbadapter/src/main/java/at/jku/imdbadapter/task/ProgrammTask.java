@@ -22,5 +22,4 @@ public class ProgrammTask extends RecursiveTask<List<TvMediaEntry>> {
         ResteasyClient client = new ResteasyClientBuilder().build();
         return Arrays.asList(client.target(url).request().get(TvMediaEntry[].class));
     }
-
 }

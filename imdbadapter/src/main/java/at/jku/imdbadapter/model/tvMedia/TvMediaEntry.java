@@ -5,7 +5,7 @@ import at.jku.imdbadapter.model.Model;
 public class TvMediaEntry implements Model {
 
     private Sender sender;
-    private ProgrammCollection programs;
+    private ProgramCollection programs;
 
     public Sender getSender() {
         return sender;
@@ -15,11 +15,11 @@ public class TvMediaEntry implements Model {
         this.sender = sender;
     }
 
-    public ProgrammCollection getPrograms() {
+    public ProgramCollection getPrograms() {
         return programs;
     }
 
-    public void setPrograms(ProgrammCollection programs) {
+    public void setPrograms(ProgramCollection programs) {
         this.programs = programs;
     }
 
