@@ -13,7 +13,7 @@ import at.jku.imdbadapter.task.ProgrammTask;
 import at.jku.imdbadapter.task.SearchTask;
 
 public class ImdbSearchClient {
-    private final ForkJoinPool forkJoinPool = new ForkJoinPool();
+    private final ForkJoinPool forkJoinPool = ForkJoinPool.commonPool();
 
     public List<TvMediaEntry> searchProgram(int day, int month) {
         String programmUrl = new TvMediaUrlBuilder().setDay(day).setMonth(month).build();

@@ -12,7 +12,7 @@ public class ImdbMainApplication {
         ImdbSearchClient client = new ImdbSearchClient();
 
         long startTime = System.currentTimeMillis();
-        System.out.println(client.searchMovieByTitle("Game"));
+        System.out.println(client.searchMovieByTitle("Game of"));
         System.out.println("Time: " + (System.currentTimeMillis() - startTime));
         
         startTime = System.currentTimeMillis();
