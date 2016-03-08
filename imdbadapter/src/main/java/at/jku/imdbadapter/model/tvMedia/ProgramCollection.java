@@ -6,46 +6,46 @@ import javax.xml.bind.annotation.XmlElement;
 
 import at.jku.imdbadapter.model.Model;
 
-public class ProgrammCollection implements Model {
+public class ProgramCollection implements Model {
 
-    private List<Programm> morning;
-    private List<Programm> midday;
-    private List<Programm> evening;
-    private List<Programm> night;
+    private List<Program> morning;
+    private List<Program> midday;
+    private List<Program> evening;
+    private List<Program> night;
 
     @XmlElement(name = "ts0")
-    public List<Programm> getMorning() {
+    public List<Program> getMorning() {
         return morning;
     }
 
-    public void setMorning(List<Programm> morning) {
+    public void setMorning(List<Program> morning) {
         this.morning = morning;
     }
 
     @XmlElement(name = "ts1")
-    public List<Programm> getMidday() {
+    public List<Program> getMidday() {
         return midday;
     }
 
-    public void setMidday(List<Programm> midday) {
+    public void setMidday(List<Program> midday) {
         this.midday = midday;
     }
 
     @XmlElement(name = "ts2")
-    public List<Programm> getEvening() {
+    public List<Program> getEvening() {
         return evening;
     }
 
-    public void setEvening(List<Programm> evening) {
+    public void setEvening(List<Program> evening) {
         this.evening = evening;
     }
 
     @XmlElement(name = "ts3")
-    public List<Programm> getNight() {
+    public List<Program> getNight() {
         return night;
     }
 
-    public void setNight(List<Programm> night) {
+    public void setNight(List<Program> night) {
         this.night = night;
     }
 
