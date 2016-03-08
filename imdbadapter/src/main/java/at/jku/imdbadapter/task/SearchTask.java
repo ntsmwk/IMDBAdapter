@@ -9,8 +9,8 @@ import java.util.concurrent.RecursiveTask;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 
-import at.jku.imdbadapter.model.Movie;
-import at.jku.imdbadapter.model.SearchCollection;
+import at.jku.imdbadapter.model.ombd.Movie;
+import at.jku.imdbadapter.model.ombd.SearchCollection;
 
 public class SearchTask extends RecursiveTask<SearchCollection> {
     private String url;
@@ -27,7 +27,7 @@ public class SearchTask extends RecursiveTask<SearchCollection> {
 
     @Override
     protected SearchCollection compute() {
-        SearchCollection searchCollection = callSearch(url, SearchCollection.class);
+        SearchCollection searchCollection = callSearch(url);
         if (!searchAll || determineTotalPages(searchCollection) == 1) {
             return searchCollection;
         }
@@ -61,8 +61,8 @@ public class SearchTask extends RecursiveTask<SearchCollection> {
         return (searchCollection.getTotalResults() / 10) + 1;
     }
 
-    private <T> T callSearch(String url, Class<T> responseClass) {
+    private SearchCollection callSearch(String url) {
         ResteasyClient client = new ResteasyClientBuilder().build();
-        return client.target(url).request().get(responseClass);
+        return client.target(url).request().get(SearchCollection.class);
     }
 }

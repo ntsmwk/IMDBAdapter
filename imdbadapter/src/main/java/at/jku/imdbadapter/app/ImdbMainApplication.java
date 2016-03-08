@@ -1,15 +1,26 @@
 package at.jku.imdbadapter.app;
 
+import java.util.List;
+
+import at.jku.imdbadapter.model.ombd.Movie;
+import at.jku.imdbadapter.model.tvMedia.TvMediaEntry;
 import at.jku.imdbadapter.rest.ImdbSearchClient;
 
 public class ImdbMainApplication {
 
     public static void main(String[] args) {
-        long startTime = System.currentTimeMillis();
         ImdbSearchClient client = new ImdbSearchClient();
+
         System.out.println(client.searchMovieByTitle("Game"));
-        System.out.println(client.searchMovieByImdbID("tt0944947"));
-        System.out.println(client.searchMovies("Game"));
+        System.out.println(client.searchByImdbID("tt0944947"));
+        long startTime = System.currentTimeMillis();
+        List<Movie> movies = client.searchMovies("Game");
+        System.out.println("Size: " + movies.size() + "\n" + movies);
+        System.out.println("Time: " + (System.currentTimeMillis() - startTime));
+
+        startTime = System.currentTimeMillis();
+        List<TvMediaEntry> program = client.searchProgram(8, 3);
+        System.out.println("Size: " + program.size() + "\n" + program);
         System.out.println("Time: " + (System.currentTimeMillis() - startTime));
     }
 }

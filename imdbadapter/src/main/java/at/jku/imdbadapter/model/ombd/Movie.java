@@ -1,10 +1,13 @@
-package at.jku.imdbadapter.model;
+package at.jku.imdbadapter.model.ombd;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import at.jku.imdbadapter.adpater.TypeTypeAdapter;
 
 @XmlRootElement
-public class Movie extends BaseModel implements Comparable<Movie> {
+public class Movie extends OmbdModel implements Comparable<Movie> {
     private String title;
     private String year;
     private String rated;
@@ -23,8 +26,7 @@ public class Movie extends BaseModel implements Comparable<Movie> {
     private String imdbRating;
     private String imdbVotes;
     private String imdbID;
-    private String type;
-
+    private Type type;
 
     @XmlElement(name = "Title")
     public String getTitle() {
@@ -186,11 +188,12 @@ public class Movie extends BaseModel implements Comparable<Movie> {
     }
 
     @XmlElement(name = "Type")
-    public String getType() {
+    @XmlJavaTypeAdapter(TypeTypeAdapter.class)
+    public Type getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Type type) {
         this.type = type;
     }
 

@@ -1,25 +1,26 @@
 package at.jku.imdbadapter.task;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.RecursiveTask;
 
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 
-import at.jku.imdbadapter.model.ombd.Movie;
+import at.jku.imdbadapter.model.tvMedia.TvMediaEntry;
 
-public class MovieTask extends RecursiveTask<Movie> {
+public class ProgrammTask extends RecursiveTask<List<TvMediaEntry>> {
 
     private String url;
 
-    public MovieTask(String url) {
+    public ProgrammTask(String url) {
         this.url = url;
     }
 
     @Override
-    protected Movie compute() {
+    protected List<TvMediaEntry> compute() {
         ResteasyClient client = new ResteasyClientBuilder().build();
-        Movie movie = client.target(url).request().get(Movie.class);
-        return movie.isValid() ? movie : null;
+        return Arrays.asList(client.target(url).request().get(TvMediaEntry[].class));
     }
 
 }

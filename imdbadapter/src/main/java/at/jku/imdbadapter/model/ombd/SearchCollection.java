@@ -1,20 +1,19 @@
-package at.jku.imdbadapter.model;
+package at.jku.imdbadapter.model.ombd;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
-public class SearchCollection extends BaseModel {
+public class SearchCollection extends OmbdModel {
     private int totalResults;
-    private List<Movie> movies;
+    private List<Movie> movies = new ArrayList<>();
 
-    public SearchCollection(){
+    public SearchCollection() {
     }
-    
+
     public SearchCollection(int totalResults, List<Movie> movies) {
-        setResponse(true);
+        setValid(true);
         this.movies = movies;
         this.totalResults = totalResults;
     }

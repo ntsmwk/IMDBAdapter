@@ -1,39 +1,47 @@
 package at.jku.imdbadapter.builder;
 
+import at.jku.imdbadapter.model.ombd.Type;
+
 public class ImdbUrlBuilder {
+    private static final String OMBD_URL = "http://www.omdbapi.com/?";
 
-    private StringBuilder url;
+    private StringBuilder urlBuilder;
 
-    public ImdbUrlBuilder(String url) {
-        this.url = new StringBuilder(url).append("&r=json");
+    public ImdbUrlBuilder() {
+        this.urlBuilder = new StringBuilder(OMBD_URL).append("&r=json");
     }
 
     public ImdbUrlBuilder setTitle(String title) {
-        url.append("&t=" + title);
+        urlBuilder.append("&t=" + title);
         return this;
     }
 
     public ImdbUrlBuilder setSearchTitle(String title) {
-        url.append("&s=" + title);
+        urlBuilder.append("&s=" + title);
         return this;
     }
 
     public ImdbUrlBuilder setID(String id) {
-        url.append("&i=" + id);
+        urlBuilder.append("&i=" + id);
         return this;
     }
 
     public ImdbUrlBuilder setYear(int year) {
-        url.append("&y=" + year);
+        urlBuilder.append("&y=" + year);
+        return this;
+    }
+
+    public ImdbUrlBuilder setType(Type movie) {
+        urlBuilder.append("&type=" + movie.name().toLowerCase());
         return this;
     }
 
     public ImdbUrlBuilder setPage(int page) {
-        url.append("&page=" + page);
+        urlBuilder.append("&page=" + page);
         return this;
     }
 
     public String build() {
-        return url.toString();
+        return urlBuilder.toString();
     }
 }
