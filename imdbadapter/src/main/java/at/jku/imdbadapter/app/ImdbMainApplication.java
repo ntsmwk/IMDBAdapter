@@ -11,9 +11,15 @@ public class ImdbMainApplication {
     public static void main(String[] args) {
         ImdbSearchClient client = new ImdbSearchClient();
 
-        System.out.println(client.searchMovieByTitle("Game"));
-        System.out.println(client.searchByImdbID("tt0944947"));
         long startTime = System.currentTimeMillis();
+        System.out.println(client.searchMovieByTitle("Game"));
+        System.out.println("Time: " + (System.currentTimeMillis() - startTime));
+        
+        startTime = System.currentTimeMillis();
+        System.out.println(client.searchByImdbID("tt0944947"));
+        System.out.println("Time: " + (System.currentTimeMillis() - startTime));
+
+        startTime = System.currentTimeMillis();
         List<Movie> movies = client.searchMovies("Game");
         System.out.println("Size: " + movies.size() + "\n" + movies);
         System.out.println("Time: " + (System.currentTimeMillis() - startTime));
