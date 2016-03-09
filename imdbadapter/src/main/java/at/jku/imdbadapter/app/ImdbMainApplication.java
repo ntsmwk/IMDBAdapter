@@ -24,11 +24,11 @@ public class ImdbMainApplication {
         System.out.println("Time: " + (System.currentTimeMillis() - startTime));
 
         startTime = System.currentTimeMillis();
-        System.out.println(client.searchProgramsBySender("ORF1", 8, 3));
+        System.out.println(client.searchProgramsBySender("ORF1", 9, 3));
         System.out.println("Time: " + (System.currentTimeMillis() - startTime));
 
         startTime = System.currentTimeMillis();
-        System.out.println(client.searchProgramsByTitle("Two and a Half Men", 8, 3));
+        System.out.println(client.searchProgramsByTitle("Two and a Half Men", 9, 3));
         System.out.println("Time: " + (System.currentTimeMillis() - startTime));
     }
 }
