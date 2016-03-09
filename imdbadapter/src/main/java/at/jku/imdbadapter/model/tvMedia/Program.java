@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 import at.jku.imdbadapter.model.Model;
 
-public class Program implements Model {
+public final class Program implements Model {
     private String id;
     private String title;
     private String subtitle;

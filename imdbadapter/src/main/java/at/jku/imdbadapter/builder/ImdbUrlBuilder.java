@@ -1,14 +1,12 @@
 package at.jku.imdbadapter.builder;
 
-import at.jku.imdbadapter.model.ombd.Type;
-
 public class ImdbUrlBuilder {
     private static final String OMBD_URL = "http://www.omdbapi.com/?";
 
     private StringBuilder urlBuilder;
 
     public ImdbUrlBuilder() {
-        this.urlBuilder = new StringBuilder(OMBD_URL).append("&r=json");
+        this.urlBuilder = new StringBuilder(OMBD_URL);
     }
 
     public ImdbUrlBuilder setTitle(String title) {
@@ -31,8 +29,8 @@ public class ImdbUrlBuilder {
         return this;
     }
 
-    public ImdbUrlBuilder setType(Type movie) {
-        urlBuilder.append("&type=" + movie.name().toLowerCase());
+    public ImdbUrlBuilder setType(String type) {
+        urlBuilder.append("&type=" + type);
         return this;
     }
 

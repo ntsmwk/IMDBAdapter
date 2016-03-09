@@ -14,20 +14,22 @@ import at.jku.imdbadapter.task.ProgramsTask;
 import at.jku.imdbadapter.task.SearchTask;
 
 public final class ImdbSearchClient {
+    
     private final ForkJoinPool forkJoinPool = ForkJoinPool.commonPool();
 
-    public Movie searchByImdbId(String id) {
+    public enum Type {
+        MOVIE, SERIES, GAME
+    }
+
+
+    public Movie findByImdbId(String id) {
         String movieURL = new ImdbUrlBuilder().setId(id).build();
         return forkJoinPool.invoke(new MovieTask(movieURL));
     }
 
-    public Movie searchByTitle(String title) {
-        String movieURL = new ImdbUrlBuilder().setTitle(title).build();
-        return forkJoinPool.invoke(new MovieTask(movieURL));
-    }
-
-    public List<Movie> searchMovies(String search) {
-        String searchURL = new ImdbUrlBuilder().setSearchTitle(search).build();
+    public List<Movie> search(String searchString, Type type) {
+        String typeAsString = type.name().toLowerCase();
+        String searchURL = new ImdbUrlBuilder().setSearchTitle(searchString).setType(typeAsString).build();
         return forkJoinPool.invoke(new SearchTask(searchURL, true));
     }
 
