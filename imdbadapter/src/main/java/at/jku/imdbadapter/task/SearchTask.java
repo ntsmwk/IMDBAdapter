@@ -1,6 +1,7 @@
 package at.jku.imdbadapter.task;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.ForkJoinTask;
@@ -12,35 +13,37 @@ import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import at.jku.imdbadapter.model.ombd.Movie;
 import at.jku.imdbadapter.model.ombd.SearchCollection;
 
-public class SearchTask extends RecursiveTask<SearchCollection> {
+public class SearchTask extends RecursiveTask<List<Movie>> {
     private String url;
-    private boolean searchAll;
+    private boolean recurivseSearch;
 
     public SearchTask(String url) {
         this.url = url;
     }
 
-    public SearchTask(String url, boolean searchAll) {
+    public SearchTask(String url, boolean recursiveSearch) {
         this.url = url;
-        this.searchAll = searchAll;
+        this.recurivseSearch = recursiveSearch;
     }
 
     @Override
-    protected SearchCollection compute() {
+    protected List<Movie> compute() {
         SearchCollection searchCollection = callSearch(url);
-        if (!searchAll || determineTotalPages(searchCollection) == 1) {
-            return searchCollection;
+        if (!searchCollection.isValid()) {
+            return Collections.emptyList();
         }
-
+        if (!recurivseSearch || determineTotalPages(searchCollection) == 1) {
+            return searchCollection.getMovies();
+        }
         return computeAll(searchCollection);
     }
 
-    private SearchCollection computeAll(SearchCollection searchCollection) {
+    private List<Movie> computeAll(SearchCollection searchCollection) {
         ConcurrentSkipListSet<Movie> movies = new ConcurrentSkipListSet<>(searchCollection.getMovies());
-        for (ForkJoinTask<SearchCollection> task : invokeAll(generateSearchTasks(searchCollection))) {
-            movies.addAll(task.join().getMovies());
+        for (ForkJoinTask<List<Movie>> task : invokeAll(generateSearchTasks(searchCollection))) {
+            movies.addAll(task.join());
         }
-        return new SearchCollection(searchCollection.getTotalResults(), new ArrayList<>(movies));
+        return new ArrayList<>(movies);
     }
 
     private List<SearchTask> generateSearchTasks(SearchCollection searchCollection) {

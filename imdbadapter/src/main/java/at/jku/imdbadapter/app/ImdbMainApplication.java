@@ -15,7 +15,7 @@ public class ImdbMainApplication {
         System.out.println("Time: " + (System.currentTimeMillis() - startTime));
 
         startTime = System.currentTimeMillis();
-        System.out.println(client.searchByImdbID("tt0944947"));
+        System.out.println(client.searchByImdbId("tt0944947"));
         System.out.println("Time: " + (System.currentTimeMillis() - startTime));
 
         startTime = System.currentTimeMillis();

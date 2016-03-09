@@ -2,7 +2,7 @@ package at.jku.imdbadapter.model.tvMedia;
 
 import at.jku.imdbadapter.model.Model;
 
-public class Sender implements Model {
+public class Broadcaster implements Model {
     private long id;
     private String sender;
     private String sendername;

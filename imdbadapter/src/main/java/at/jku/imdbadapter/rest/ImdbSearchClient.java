@@ -16,14 +16,19 @@ import at.jku.imdbadapter.task.SearchTask;
 public final class ImdbSearchClient {
     private final ForkJoinPool forkJoinPool = ForkJoinPool.commonPool();
 
+    public Movie searchByImdbId(String id) {
+        String movieURL = new ImdbUrlBuilder().setId(id).build();
+        return forkJoinPool.invoke(new MovieTask(movieURL));
+    }
+
     public Movie searchByTitle(String title) {
         String movieURL = new ImdbUrlBuilder().setTitle(title).build();
         return forkJoinPool.invoke(new MovieTask(movieURL));
     }
 
-    public Movie searchByImdbID(String id) {
-        String movieURL = new ImdbUrlBuilder().setID(id).build();
-        return forkJoinPool.invoke(new MovieTask(movieURL));
+    public List<Movie> searchMovies(String search) {
+        String searchURL = new ImdbUrlBuilder().setSearchTitle(search).build();
+        return forkJoinPool.invoke(new SearchTask(searchURL, true));
     }
 
     public List<Program> searchProgramsByTitle(String title, int day, int month) {
@@ -34,11 +39,6 @@ public final class ImdbSearchClient {
     public List<Program> searchProgramsBySender(String sender, int day, int month) {
         String programUrl = new TvMediaUrlBuilder().setDay(day).setMonth(month).build();
         return filterProgramsBySender(sender, forkJoinPool.invoke(new ProgramsTask(programUrl)));
-    }
-
-    public List<Movie> searchMovies(String search) {
-        String searchURL = new ImdbUrlBuilder().setSearchTitle(search).build();
-        return forkJoinPool.invoke(new SearchTask(searchURL, true)).getMovies();
     }
 
     private List<Program> filterProgramsByTitle(String title, List<Program> programs) {
@@ -54,6 +54,6 @@ public final class ImdbSearchClient {
     }
 
     private Predicate<Program> createProgramSenderPredicate(String sender) {
-        return (program) -> program.getSender().equals(sender);
+        return (program) -> program.getBroadcaster().equals(sender);
     }
 }

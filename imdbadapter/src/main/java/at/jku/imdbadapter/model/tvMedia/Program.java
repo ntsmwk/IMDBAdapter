@@ -8,9 +8,9 @@ public class Program implements Model {
     private String id;
     private String title;
     private String subtitle;
-    private String sender;
+    private String broadcaster;
     private String date;
-    private String categorie;
+    private String category;
     private String time;
 
     public String getId() {
@@ -39,12 +39,12 @@ public class Program implements Model {
         this.subtitle = subtitle;
     }
 
-    public String getSender() {
-        return sender;
+    public String getBroadcaster() {
+        return broadcaster;
     }
 
-    public void setSender(String sender) {
-        this.sender = sender;
+    public void setBroadcaster(String broadcaster) {
+        this.broadcaster = broadcaster;
     }
 
     @XmlElement(name = "datum")
@@ -57,12 +57,12 @@ public class Program implements Model {
     }
 
     @XmlElement(name = "kategorie")
-    public String getCategorie() {
-        return categorie;
+    public String getCategory() {
+        return category;
     }
 
-    public void setCategorie(String categorie) {
-        this.categorie = categorie;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     @XmlElement(name = "zeit")
@@ -76,6 +76,6 @@ public class Program implements Model {
 
     @Override
     public String toString() {
-        return String.format("Programm [title=%s, time=%s, sender=%s]", title, time, sender);
+        return String.format("Programm [title=%s, time=%s, broadcaster=%s]", title, time, broadcaster);
     }
 }

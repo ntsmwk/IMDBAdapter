@@ -21,7 +21,7 @@ public class ImdbUrlBuilder {
         return this;
     }
 
-    public ImdbUrlBuilder setID(String id) {
+    public ImdbUrlBuilder setId(String id) {
         urlBuilder.append("&i=" + id);
         return this;
     }

@@ -53,6 +53,6 @@ public class ProgramsTask extends RecursiveTask<List<Program>> {
     }
 
     private void updateProgram(Program program, String sender) {
-        program.setSender(sender);
+        program.setBroadcaster(sender);
     }
 }

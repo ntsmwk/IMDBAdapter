@@ -4,15 +4,15 @@ import at.jku.imdbadapter.model.Model;
 
 public class TvMediaEntry implements Model {
 
-    private Sender sender;
+    private Broadcaster broadcaster;
     private ProgramCollection programs;
 
-    public Sender getSender() {
-        return sender;
+    public Broadcaster getSender() {
+        return broadcaster;
     }
 
-    public void setSender(Sender sender) {
-        this.sender = sender;
+    public void setSender(Broadcaster broadcaster) {
+        this.broadcaster = broadcaster;
     }
 
     public ProgramCollection getPrograms() {
@@ -25,7 +25,7 @@ public class TvMediaEntry implements Model {
 
     @Override
     public String toString() {
-        return String.format("TvMediaEntry [sender=%s, programs=%s]", sender, programs);
+        return String.format("TvMediaEntry [sender=%s, programs=%s]", broadcaster, programs);
     }
 
 }

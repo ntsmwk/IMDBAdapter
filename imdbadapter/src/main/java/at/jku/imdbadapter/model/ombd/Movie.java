@@ -25,7 +25,7 @@ public class Movie extends OmbdModel implements Comparable<Movie> {
     private String poster;
     private String imdbRating;
     private String imdbVotes;
-    private String imdbID;
+    private String imdbId;
     private Type type;
 
     @XmlElement(name = "Title")
@@ -179,12 +179,13 @@ public class Movie extends OmbdModel implements Comparable<Movie> {
         this.imdbVotes = imdbVotes;
     }
 
-    public String getImdbID() {
-        return imdbID;
+    @XmlElement(name = "imdbID")
+    public String getImdbId() {
+        return imdbId;
     }
 
-    public void setImdbID(String imdbID) {
-        this.imdbID = imdbID;
+    public void setImdbId(String imdbId) {
+        this.imdbId = imdbId;
     }
 
     @XmlElement(name = "Type")
@@ -199,7 +200,7 @@ public class Movie extends OmbdModel implements Comparable<Movie> {
 
     @Override
     public int hashCode() {
-        return title.hashCode() * 13;
+        return imdbId.hashCode() * title.hashCode() * 13;
     }
 
     @Override
@@ -208,16 +209,20 @@ public class Movie extends OmbdModel implements Comparable<Movie> {
             return false;
         }
         Movie other = (Movie) obj;
-        return other.title.equals(title);
+        return other.imdbId.equals(imdbId) && other.title.equals(title);
     }
 
     @Override
     public int compareTo(Movie o) {
-        return title.compareTo(o.title);
+        int compareByImbdId = o.imdbId.compareTo(imdbId);
+        if (compareByImbdId == 0) {
+            return title.compareTo(o.title);
+        }
+        return compareByImbdId;
     }
 
     @Override
     public String toString() {
-        return String.format("Movie [title=%s]", title);
+        return String.format("Movie [imbdId=%s, title=%s]", imdbId, title);
     }
 }
