@@ -3,9 +3,10 @@ package at.jku.imdbadapter.app;
 import java.util.List;
 
 import at.jku.imdbadapter.model.ombd.Movie;
+import at.jku.imdbadapter.model.tvMedia.Program;
 import at.jku.imdbadapter.rest.ImbdSearchAPI;
-import at.jku.imdbadapter.rest.TvMediaProgramAPI;
 import at.jku.imdbadapter.rest.ImbdSearchAPI.Type;
+import at.jku.imdbadapter.rest.TvMediaProgramAPI;
 
 public class ImdbMainApplication {
 
@@ -14,21 +15,22 @@ public class ImdbMainApplication {
 
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
-        System.out.println(tvMediaSearchAPI.searchProgramsBySender("ORF1", 9, 3));
-        System.out.println("Time: " + (System.currentTimeMillis() - startTime));
+        List<Program> programs = tvMediaSearchAPI.searchByBroadcaster("ORF1", 9, 3);
+        System.out.println("size: " + programs.size() + ", programs: " + programs);
+        System.out.println("time: " + (System.currentTimeMillis() - startTime) + "\n");
 
         startTime = System.currentTimeMillis();
-        System.out.println(tvMediaSearchAPI.searchProgramsByTitle("Two and a Half Men", 9, 3));
-        System.out.println("Time: " + (System.currentTimeMillis() - startTime));
-
-        startTime = System.currentTimeMillis();
-        System.out.println(imbdSearchAPI.findByImdbId("tt0944947"));
-        System.out.println("Time: " + (System.currentTimeMillis() - startTime));
+        programs = tvMediaSearchAPI.searchByTitle("Two and a Half Men", 1, 3);
+        System.out.println("size: " + programs.size() + ", programs: " + programs);
+        System.out.println("time: " + (System.currentTimeMillis() - startTime) + "\n");
 
         startTime = System.currentTimeMillis();
         List<Movie> movies = imbdSearchAPI.search("Game of", Type.SERIES);
-        System.out.println("Size: " + movies.size() + "\n" + movies);
-        System.out.println("Time: " + (System.currentTimeMillis() - startTime));
+        System.out.println("size: " + movies.size() + ", movie: " + movies);
+        System.out.println("time: " + (System.currentTimeMillis() - startTime) + "\n");
 
+        startTime = System.currentTimeMillis();
+        System.out.println(imbdSearchAPI.findByImdbId("tt0944947"));
+        System.out.println("time: " + (System.currentTimeMillis() - startTime));
     }
 }

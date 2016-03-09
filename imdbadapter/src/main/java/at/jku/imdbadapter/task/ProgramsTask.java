@@ -2,9 +2,12 @@ package at.jku.imdbadapter.task;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.RecursiveTask;
 import java.util.stream.Collectors;
+
+import javax.ws.rs.NotFoundException;
 
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
@@ -23,7 +26,11 @@ public class ProgramsTask extends RecursiveTask<List<Program>> {
     @Override
     protected List<Program> compute() {
         ResteasyClient client = new ResteasyClientBuilder().build();
-        return collectPrograms(client.target(url).request().get(TvMediaEntry[].class));
+        try {
+            return collectPrograms(client.target(url).request().get(TvMediaEntry[].class));
+        } catch (NotFoundException ex) {
+            return Collections.emptyList();
+        }
     }
 
     private List<Program> collectPrograms(TvMediaEntry[] tvMediaEntries) {
